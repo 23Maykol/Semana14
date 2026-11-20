@@ -1,0 +1,7 @@
+﻿**/bin/
+**/obj/
+**/published/
+**/.idea/
+.git/
+.github/
+.env
