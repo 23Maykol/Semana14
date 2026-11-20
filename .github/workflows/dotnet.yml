@@ -1,0 +1,36 @@
+
+name: Build and Publish .NET Application
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar .NET 10
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restaurar dependencias
+        run: dotnet restore
+
+      - name: Compilar aplicacion
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publicar aplicacion
+        run: dotnet publish ./Semana14/Semana14.csproj --configuration Release --output ./published --no-restore
+
+      - name: Guardar archivos publicados
+        uses: actions/upload-artifact@v4
+        with:
+          name: Semana14-Published
+          path: ./published
