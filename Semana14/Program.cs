@@ -1,17 +1,16 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Registrar servicios
+// Servicios
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Habilitar Swagger también en Render (Production)
+// Swagger disponible también en Render
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Render maneja HTTPS mediante su proxy
 if (app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
@@ -21,10 +20,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Endpoint de prueba
 app.MapGet("/", () => Results.Ok(new
     {
-        mensaje = "API Semana14 funcionando",
-        entorno = app.Environment.EnvironmentName,
+        mensaje = "Laboratorio 14 funcionando correctamente",
+        framework = ".NET 10",
+        plataforma = "Render",
         estado = "Online"
     }))
     .WithTags("Estado");
